@@ -70,16 +70,15 @@ export default function CreateAccount(){
         e.preventDefault()
         if(isLoading || name === "" || email === "" || password === "") return;
         try {
-            // TODO
-            // 1. 계정 만들기
-            // 2. 유저 이름 셋팅
-            // 3. 홈페이지로 redirect
             setIsLoading(true)
+            // 1. 계정 만들기
             const credentials = await createUserWithEmailAndPassword(auth, email, password)
             console.log(credentials.user)
+            // 2. 유저 이름 셋팅
             await updateProfile(credentials.user, {
                 displayName: name,
             })
+            // 3. 홈페이지로 redirect
             navigate('/')
         } catch(e) {
         } finally {
