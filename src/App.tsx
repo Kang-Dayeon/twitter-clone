@@ -1,7 +1,7 @@
 import {useState, useEffect} from "react";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 // ** style **
-import {createGlobalStyle} from "styled-components";
+import styled, {createGlobalStyle} from "styled-components";
 import reset from "styled-reset";
 // ** components **
 import Layout from "./components/layout";
@@ -48,6 +48,12 @@ const GlobalStyles = createGlobalStyle`
   }
 `
 
+const Wrapper = styled.div`
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+`
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const init = async () => {
@@ -60,10 +66,10 @@ function App() {
   }, []);
 
   return (
-    <>
+    <Wrapper>
       <GlobalStyles/>
       {isLoading ? <LoadingScreen/> : <RouterProvider router={router} />}
-    </>
+    </Wrapper>
   )
 }
 
