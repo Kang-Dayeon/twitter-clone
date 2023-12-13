@@ -12,6 +12,7 @@ const Wrapper = styled .div`
 
 const Title = styled.h1`
     font-size: 42px;
+    font-weight: 600;
 `
 
 const Form = styled.form`
@@ -30,6 +31,7 @@ const Input = styled.input`
     font-size: 16px;
     &[type="submit"]{
         cursor: pointer;
+        font-weight: 600;
         &:hover {
             opacity: 0.8;
         }
