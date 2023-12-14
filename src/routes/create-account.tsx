@@ -62,7 +62,10 @@ export default function CreateAccount(){
             </Form>
             {error !== "" ? <Error>{error}</Error> : null}
             <Switcher>
-                Already have an account? <Link to="/login">Log in &rarr;</Link>
+                Already have an account? <Link to="/login">Log in</Link>
+            </Switcher>
+            <Switcher>
+                <Link to="/find-password">Forgot your Password?</Link>
             </Switcher>
             <GithubBtn />
         </Wrapper>

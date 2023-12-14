@@ -32,6 +32,8 @@ export const Input = styled.input`
     &[type="submit"]{
         cursor: pointer;
         font-weight: 600;
+        color: #fff;
+        background-color: #1d9bf0;
         &:hover {
             opacity: 0.8;
         }
@@ -45,7 +47,7 @@ export const Error = styled.span`
 `
 
 export const Switcher = styled.span`
-    margin-top: 10px;
+    margin-top: 15px;
     a {
         color: #1d9bf0;
     }

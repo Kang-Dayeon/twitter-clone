@@ -51,7 +51,10 @@ export default function Login(){
             </Form>
             {error !== "" ? <Error>{error}</Error> : null}
             <Switcher>
-                Don't have an account? <Link to="/create-account">Create One &rarr;</Link>
+                Don't have an account? <Link to="/create-account">Create One</Link>
+            </Switcher>
+            <Switcher>
+                <Link to="/find-password">Forgot your Password?</Link>
             </Switcher>
             <GithubBtn />
         </Wrapper>
