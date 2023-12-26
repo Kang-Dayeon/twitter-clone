@@ -5,9 +5,13 @@ import {auth, db, storage} from "../firebase";
 import {ref, uploadBytes, getDownloadURL} from "firebase/storage";
 
 const Form = styled.form`
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: 20px 0;
+    background: black;
 `
 
 const TextArea = styled.textarea`

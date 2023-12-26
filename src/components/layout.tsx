@@ -3,20 +3,20 @@ import styled from "styled-components";
 import {auth} from "../firebase";
 
 const Wrapper = styled.div`
-    display: grid;
-    gap: 20px;
-    grid-template-columns: 1fr 4fr;
-    padding: 50px 0;
+    position: relative;
+    padding: 0 30px 80px;
     width: 100%;
-    max-width: 860px;
-    height: 100%;
+    max-width: 500px;
+    height: 100vh;
+    overflow: hidden;
 `
 
 const Menu = styled.div`
+    margin-top: 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    width: 100%;
 `
 
 const MenuItem = styled.div`
@@ -25,8 +25,8 @@ const MenuItem = styled.div`
     align-items: center;
     justify-content: center;
     border: 2px solid white;
-    height: 50px;
-    width: 50px;
+    height: 45px;
+    width: 45px;
     border-radius: 50%;
     svg {
         width: 30px;
@@ -51,6 +51,7 @@ export default function Layout(){
     }
     return(
         <Wrapper>
+            <Outlet/>
             <Menu>
                 <Link to="/">
                     <MenuItem>
@@ -74,7 +75,6 @@ export default function Layout(){
                 </MenuItem>
             </Menu>
             {/* router를 활용해서 layout 밑에 자식들이 여기로 들어옴 */}
-            <Outlet/>
         </Wrapper>
     )
 }
