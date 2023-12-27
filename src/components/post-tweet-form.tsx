@@ -11,16 +11,16 @@ const Form = styled.form`
     flex-direction: column;
     gap: 10px;
     padding: 20px 0;
-    background: black;
+    background: #17212d;
 `
 
 const TextArea = styled.textarea`
-    border: 2px solid white;
+    border: 1px solid rgba(255, 255, 255, 0.7);
     padding: 20px;
     border-radius: 20px;
     font-size: 16px;
     color: white;
-    background-color: black;
+    background: #17212d;
     width: 100%;
     resize: none;
     &::placeholder {

@@ -4,38 +4,56 @@ import {auth} from "../firebase";
 
 const Wrapper = styled.div`
     position: relative;
-    padding: 0 30px 80px;
     width: 100%;
     max-width: 500px;
     height: 100vh;
     overflow: hidden;
+    background: #17212d;
 `
 
 const Menu = styled.div`
+    position: sticky;
+    bottom: 0;
+    height: 60px;
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    background: #17212d;
 `
 
 const MenuItem = styled.div`
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid white;
-    height: 45px;
-    width: 45px;
+    position: absolute;
+    bottom: 5px;
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
+    transition: all 0.3s;
     svg {
+        transition: all 0.3s;
         width: 30px;
-        fill: white;
+    }
+    &.home {
+        left: 15%;
+    }
+    &.profile {
+        left: calc(50% - 25px);
     }
     &.log-out {
-        border-color: #1d9bf0;
+        right: 15%;
+    }
+    &:hover {
+        bottom: 15px;
+        background: #fff;
         svg {
-            fill: #1d9bf0;
+            width: 33px;
+            stroke: #17212d;
         }
     }
 `
@@ -54,24 +72,25 @@ export default function Layout(){
             <Outlet/>
             <Menu>
                 <Link to="/">
-                    <MenuItem>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                            <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-                            <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                    <MenuItem className="home">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" className="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
                         </svg>
                     </MenuItem>
                 </Link>
                 <Link to="/Profile">
-                    <MenuItem>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                            <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
+                    <MenuItem className="profile">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" className="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
                         </svg>
+
                     </MenuItem>
                 </Link>
                 <MenuItem onClick={onLogout} className="log-out">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                        <path fillRule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm5.03 4.72a.75.75 0 010 1.06l-1.72 1.72h10.94a.75.75 0 010 1.5H10.81l1.72 1.72a.75.75 0 11-1.06 1.06l-3-3a.75.75 0 010-1.06l3-3a.75.75 0 011.06 0z" clipRule="evenodd" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" className="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"/>
                     </svg>
+
                 </MenuItem>
             </Menu>
             {/* router를 활용해서 layout 밑에 자식들이 여기로 들어옴 */}
