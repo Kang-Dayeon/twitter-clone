@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 `
 
 const Menu = styled.div`
-    position: sticky;
+    position: absolute;
     bottom: 0;
     height: 60px;
     margin-top: 20px;
