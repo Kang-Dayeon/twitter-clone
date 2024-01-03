@@ -1,24 +1,30 @@
-import {auth, storage} from "../firebase";
 import styled from "styled-components";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+// ** firebase **
+import {auth, db, storage} from "../firebase";
+import {query, collection, where, orderBy, limit, getDocs} from "firebase/firestore";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {updateProfile} from "firebase/auth";
+import {ITweet} from "../components/timeline";
+import Tweet from "../components/tweet";
 
 const Wrapper = styled.div`
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     gap: 20px;
+    padding: 30px 0 60px;
     height: 100%;
 `
+
+const AvatarWrap = styled.div``
 
 const AvatarUpload = styled.label`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
     border: 3px solid #fff;
     border-radius: 50%;
@@ -41,10 +47,22 @@ const Name = styled.span`
     font-size: 22px;
 `
 
+const Tweets = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+    padding: 30px;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`
+
 export default function Profile(){
     const user = auth.currentUser
 
     const [avatar, setAvatar] = useState(user?.photoURL)
+    const [tweets, setTweets] = useState<ITweet[]>([])
 
     const onAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const {files} = e.target
@@ -61,20 +79,53 @@ export default function Profile(){
         }
     }
 
+    const fetchTweets = async () => {
+        const tweeetQuery = query(
+            collection(db, "tweets"),
+            where("userId", "==", user?.uid),
+            orderBy("createdAt", "desc"),
+            limit(25)
+        )
+        const snapshot = await getDocs(tweeetQuery)
+        const tweets = snapshot.docs.map(doc => {
+            const {tweet, createdAt, userId, username, photo} = doc.data()
+            return {
+                tweet,
+                createdAt,
+                userId,
+                username,
+                photo,
+                id: doc.id,
+            }
+        })
+        setTweets(tweets)
+    }
+
+    useEffect(() => {
+        fetchTweets()
+    }, [])
+
     return(
         <Wrapper>
-            <AvatarUpload htmlFor="avatar">
-                {Boolean(avatar) ? (<AvatarImg src={avatar}/>
-                ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
-                    </svg>
-                )}
-            </AvatarUpload>
-            <AvatarInput onChange={onAvatarChange} type="file" accept="image/*" id="avatar" />
+            <AvatarWrap>
+                <AvatarUpload htmlFor="avatar">
+                    {Boolean(avatar) ? (<AvatarImg src={avatar}/>
+                    ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+                        </svg>
+                    )}
+                </AvatarUpload>
+                <AvatarInput onChange={onAvatarChange} type="file" accept="image/*" id="avatar" />
+            </AvatarWrap>
             <Name>
                 {user?.displayName ?? "Anonymous"}
             </Name>
+            <Tweets>
+                {tweets.map(tweet => (
+                    <Tweet key={tweet.id} {...tweet} />
+                ))}
+            </Tweets>
         </Wrapper>
     )
 }
