@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {useEffect, useState} from "react";
 // ** firebase **
 import {auth, db, storage} from "../firebase";
-import {query, collection, where, orderBy, limit, getDocs} from "firebase/firestore";
+import {query, collection, where, orderBy, limit, doc, updateDoc, onSnapshot, Unsubscribe} from "firebase/firestore";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {updateProfile} from "firebase/auth";
 import {ITweet} from "../components/timeline";
@@ -52,8 +52,9 @@ const Tweets = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
     overflow-y: scroll;
-    padding: 30px 0 60px;
+    padding: 30px 30px 60px;
     &::-webkit-scrollbar {
         display: none;
     }
@@ -100,6 +101,7 @@ export default function Profile(){
     const [tweets, setTweets] = useState<ITweet[]>([])
     const [edit, setEdit] = useState(false)
     const [name, setName] = useState(user.displayName)
+    const [tweetId, setTweetId] = useState([])
 
     const onAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const {files} = e.target
@@ -116,34 +118,20 @@ export default function Profile(){
         }
     }
 
-    const fetchTweets = async () => {
-        const tweeetQuery = query(
-            collection(db, "tweets"),
-            where("userId", "==", user?.uid),
-            orderBy("createdAt", "desc"),
-            limit(25)
-        )
-        const snapshot = await getDocs(tweeetQuery)
-        const tweets = snapshot.docs.map(doc => {
-            const {tweet, createdAt, userId, username, photo} = doc.data()
-            return {
-                tweet,
-                createdAt,
-                userId,
-                username,
-                photo,
-                id: doc.id,
-            }
-        })
-        setTweets(tweets)
-    }
-
     const onClickNameChange = () => {
         setEdit(true)
     }
 
     const onNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value)
+    }
+
+    const tweetNameChange = async () => {
+        for(let i = 0; i < tweetId.length; i++){
+            await updateDoc(doc(db, "tweets", tweetId[i]),{
+                username: name,
+            })
+        }
     }
 
     const onSubmitName = async () => {
@@ -155,6 +143,7 @@ export default function Profile(){
                 await updateProfile(user, {
                     displayName: name,
                 })
+                await tweetNameChange()
                 setEdit(false)
             }
         } catch (e){
@@ -163,7 +152,36 @@ export default function Profile(){
     }
 
     useEffect(() => {
+        let unsubscribe : Unsubscribe | null = null
+        const fetchTweets = async () => {
+            const tweetsQuery = query(
+                collection(db, "tweets"),
+                where("userId", "==", user?.uid),
+                orderBy("createdAt", "desc"),
+                limit(25)
+            )
+
+            unsubscribe = await onSnapshot(tweetsQuery, (snapshot) => {
+                const tweets = snapshot.docs.map((doc) => {
+                    const {tweet, createdAt, userId, username, photo} = doc.data()
+                    return {
+                        tweet,
+                        createdAt,
+                        userId,
+                        username,
+                        photo,
+                        id: doc.id,
+                    }
+                })
+                setTweetId(tweets.map((tweet) => {return tweet.id}))
+                setTweets(tweets)
+            })
+        }
         fetchTweets()
+
+        return() => {
+            unsubscribe && unsubscribe()
+        }
     }, [])
 
     return(
@@ -172,7 +190,7 @@ export default function Profile(){
                 <AvatarUpload htmlFor="avatar">
                     {Boolean(avatar) ? (<AvatarImg src={avatar}/>
                     ) : (
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#404040" className="w-6 h-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" className="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
                         </svg>
                     )}
