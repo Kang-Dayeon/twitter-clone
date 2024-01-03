@@ -21,8 +21,9 @@ const Username = styled.h4`
 `
 
 const Payload = styled.p`
-    margin: 10px 0;
-    font-size: 20px;
+    margin: 15px 0;
+    font-size: 18px;
+    line-height: 1.3;
 `
 
 const Photo = styled.img`
@@ -31,9 +32,10 @@ const Photo = styled.img`
 `
 
 const BtnWrapper = styled.div`
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
     align-items: center;
+    justify-content: end;
 `
 
 const DeleteButton = styled.button`
