@@ -2,6 +2,7 @@ import {Link, Outlet, useNavigate} from "react-router-dom"
 import styled from "styled-components";
 import {auth} from "../firebase";
 import Header from "./Header";
+import {useState} from "react";
 
 const Wrapper = styled.div`
     position: relative;
@@ -48,7 +49,8 @@ const MenuItem = styled.div`
     &.log-out {
         right: 15%;
     }
-    &:hover {
+    &:hover,
+    &:active{
         bottom: 30px;
         background: #1d9bf0;
         svg {

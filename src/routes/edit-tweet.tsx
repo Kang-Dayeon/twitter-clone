@@ -19,8 +19,6 @@ const Wrapper = styled.div`
 `
 
 const Form = styled.form`
-    position: sticky;
-    top: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;

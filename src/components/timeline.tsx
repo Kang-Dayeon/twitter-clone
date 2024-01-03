@@ -29,6 +29,7 @@ export default function Timeline(){
                 limit(25)
             )
 
+            // 그냥 데이터 불러오는거
             // const snapshot = await getDocs(tweetsQuery)
             //
             // const tweets = snapshot.docs.map((doc) => {
@@ -43,7 +44,7 @@ export default function Timeline(){
             //     }
             // })
 
-            // 쿼리에 리스너를 붙여준것
+            // 쿼리에 리스너를 붙여준것 : 실시간 변경 감지
             unsubscribe = await onSnapshot(tweetsQuery, (snapshot) => {
                 const tweets = snapshot.docs.map((doc) => {
                     const {tweet, createdAt, userId, username, photo} = doc.data()

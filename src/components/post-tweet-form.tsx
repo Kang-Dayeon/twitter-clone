@@ -19,7 +19,6 @@ const TextArea = styled.textarea`
     border-radius: 20px;
     background: #fff;
     font-size: 16px;
-    color: white;
     width: 100%;
     resize: none;
     &::placeholder {
