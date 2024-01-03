@@ -6,10 +6,9 @@ import {ref, deleteObject} from "firebase/storage";
 import {Link} from "react-router-dom";
 
 const Wrapper = styled.div`
-    margin-bottom: 20px;
     padding: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 15px;
+    border-top: 1px solid #BFBFBF;
+    color: #000;
 `
 
 const Column = styled.div``

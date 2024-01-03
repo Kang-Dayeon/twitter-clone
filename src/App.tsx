@@ -57,9 +57,6 @@ const GlobalStyles = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-  body {
-    color: white;
-  }
 `
 
 const Wrapper = styled.div`

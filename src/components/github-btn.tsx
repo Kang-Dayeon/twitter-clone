@@ -17,6 +17,12 @@ const Button = styled.span`
     color: black;
     width: 100%;
     cursor: pointer;
+    border: 1px solid #BFBFBF;
+    &:hover {
+        background: #BFBFBF;
+        color: #fff;
+        border: none;
+    }
 `
 
 const Logo = styled.img`

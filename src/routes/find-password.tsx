@@ -38,7 +38,7 @@ export default function FindPassword(){
 
     return(
         <Wrapper>
-            <Title>Find Password 🕊</Title>
+            <Title>Find Password</Title>
             <Form onSubmit={onSubmit}>
                 <Input onChange={onChange} name="email" value={email} placeholder="Email" type="email" required />
                 <Input type="submit" value={ isLoading ? "Loading..." : "Send Email" } />

@@ -25,7 +25,6 @@ const Form = styled.form`
     flex-direction: column;
     gap: 10px;
     padding: 20px 0;
-    background: #17212d;
 `
 const Column = styled.div``
 
@@ -35,12 +34,10 @@ const Photo = styled.img`
 `
 
 const TextArea = styled.textarea`
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid #BFBFBF;
     padding: 20px;
     border-radius: 20px;
     font-size: 16px;
-    color: white;
-    background: #17212d;
     width: 100%;
     resize: none;
     &::placeholder {

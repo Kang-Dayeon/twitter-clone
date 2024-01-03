@@ -13,7 +13,9 @@ export interface ITweet{
     createdAt: number;
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+    padding: 20px 0;
+`
 
 export default function Timeline(){
     const [tweets, setTweets] = useState<ITweet[]>([])

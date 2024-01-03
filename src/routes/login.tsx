@@ -44,7 +44,7 @@ export default function Login(){
 
     return(
         <Wrapper>
-            <Title>Log into 🕊</Title>
+            <Title>Log into Tweet</Title>
             <Form onSubmit={onSubmit}>
                 <Input onChange={onChange} name="email" value={email} placeholder="Email" type="email" required />
                 <Input onChange={onChange} name="password" value={password} placeholder="Password" type="password" required/>
