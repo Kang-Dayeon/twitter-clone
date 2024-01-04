@@ -89,7 +89,7 @@ export default function EditTweet(){
     const [isLoading, setIsLoading] = useState(false)
     const [tweet, setTweet] = useState(tweetValue)
     const [file, setFile] = useState<File | null>(null)
-    const [imgSrc, setImgSrc] = useState("")
+    const [imgSrc, setImgSrc] = useState<string | ArrayBuffer | null>("")
 
     const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setTweet(e.target.value)
@@ -105,7 +105,7 @@ export default function EditTweet(){
             reader.onloadend = () => {
                 setImgSrc(reader.result)
             }
-        } else if(files[0].size > maxSize){
+        } else if(files && files[0].size > maxSize){
             alert("최대 1MB까지 올릴 수 있습니다.")
         }
     }
@@ -117,15 +117,15 @@ export default function EditTweet(){
 
         try {
             setIsLoading(true)
-            const newDoc = await updateDoc(doc(db, "tweets", id), {
+            await updateDoc(doc(db, "tweets", id), {
                 tweet,
                 createdAt: Date.now(),
             })
             if(file){
-                const locationRef = ref(storage, `tweets/${user.uid}/${doc.id}`)
+                const locationRef = ref(storage, `tweets/${user.uid}/${id}`)
                 const result = await uploadBytes(locationRef, file)
                 const url = await getDownloadURL(result.ref)
-                await updateDoc(newDoc, {
+                await updateDoc(doc(db, "tweets", id), {
                     photo: url,
                 })
             }

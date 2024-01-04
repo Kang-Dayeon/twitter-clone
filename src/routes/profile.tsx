@@ -100,22 +100,28 @@ export default function Profile(){
     const [avatar, setAvatar] = useState(user?.photoURL)
     const [tweets, setTweets] = useState<ITweet[]>([])
     const [edit, setEdit] = useState(false)
-    const [name, setName] = useState(user.displayName)
-    const [tweetId, setTweetId] = useState([])
+    const [name, setName] = useState(user?.displayName)
+    const [tweetId, setTweetId] = useState<string[]>([])
 
     const onAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const {files} = e.target
         if(!user) return
-        if(files && files.length === 1){
-            const file = files[0]
-            const locationRef = ref(storage,`avatars/${user?.uid}`)
-            const result = await uploadBytes(locationRef, file)
-            const avatarUrl = await getDownloadURL(result.ref)
-            setAvatar(avatarUrl)
-            await updateProfile(user, {
-                photoURL: avatarUrl,
-            })
+
+        try{
+            if(files && files.length === 1){
+                const file = files[0]
+                const locationRef = ref(storage,`avatars/${user?.uid}`)
+                const result = await uploadBytes(locationRef, file)
+                const avatarUrl = await getDownloadURL(result.ref)
+                setAvatar(avatarUrl)
+                await updateProfile(user, {
+                    photoURL: avatarUrl,
+                })
+            }
+        }catch(e){
+            console.log(e)
         }
+        
     }
 
     const onClickNameChange = () => {
@@ -127,17 +133,21 @@ export default function Profile(){
     }
 
     const tweetNameChange = async () => {
-        for(let i = 0; i < tweetId.length; i++){
-            await updateDoc(doc(db, "tweets", tweetId[i]),{
-                username: name,
-            })
+        try{
+            for(let i = 0; i < tweetId.length; i++){
+                await updateDoc(doc(db, "tweets", tweetId[i]),{
+                    username: name,
+                })
+            }
+        } catch(e){
+            console.log(e)
         }
     }
 
     const onSubmitName = async () => {
         if(!user) return
         try {
-            if(name.length <= 0){
+            if(name && name.length <= 0){
                 alert("Please write your name")
             } else {
                 await updateProfile(user, {
@@ -161,7 +171,7 @@ export default function Profile(){
                 limit(25)
             )
 
-            unsubscribe = await onSnapshot(tweetsQuery, (snapshot) => {
+            unsubscribe = onSnapshot(tweetsQuery, (snapshot) => {
                 const tweets = snapshot.docs.map((doc) => {
                     const {tweet, createdAt, userId, username, photo} = doc.data()
                     return {

@@ -2,7 +2,6 @@ import {Link, Outlet, useNavigate} from "react-router-dom"
 import styled from "styled-components";
 import {auth} from "../firebase";
 import Header from "./Header";
-import {useState} from "react";
 
 const Wrapper = styled.div`
     position: relative;
@@ -79,9 +78,13 @@ export default function Layout(){
     const navigate = useNavigate()
     const onLogout = async () => {
         const ok = confirm("Are you sure you want to log out?")
-        if(ok){
-            await auth.signOut()
-            navigate('/login')
+        try{
+            if(ok){
+                await auth.signOut()
+                navigate('/login')
+            }
+        } catch(e){
+            console.log(e)
         }
     }
     return(
