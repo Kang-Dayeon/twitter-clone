@@ -75,7 +75,7 @@ export default function PostTweetForm(){
         const {files} = e.target
         if(files && files.length === 1 && files[0].size < maxSize){
             setFile(files[0])
-        } else if(files[0].size > maxSize){
+        } else if(files && files[0].size > maxSize){
             alert("최대 1MB까지 올릴 수 있습니다.")
         }
     }

@@ -11,6 +11,7 @@ export interface ITweet{
     userId: string;
     username: string;
     createdAt: number;
+    avatar: string;
 }
 
 const Wrapper = styled.div`

@@ -4,7 +4,6 @@ import {auth, db, storage} from "../firebase";
 import {deleteDoc, doc} from "firebase/firestore";
 import {ref, deleteObject} from "firebase/storage";
 import {Link} from "react-router-dom";
-import {useEffect} from "react";
 
 const Wrapper = styled.div`
     padding: 20px;
