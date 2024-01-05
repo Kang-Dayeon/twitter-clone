@@ -4,6 +4,7 @@ import {auth, db, storage} from "../firebase";
 import {deleteDoc, doc} from "firebase/firestore";
 import {ref, deleteObject} from "firebase/storage";
 import {Link} from "react-router-dom";
+import {useEffect} from "react";
 
 const Wrapper = styled.div`
     padding: 20px;
@@ -14,7 +15,6 @@ const Wrapper = styled.div`
 const Column = styled.div``
 
 const Username = styled.h4`
-    margin-top: 15px;
     font-weight: 600;
     font-size: 15px;
 `
@@ -66,7 +66,32 @@ const EditButton = styled.button`
     }
 `
 
-export default function Tweet({username, photo, tweet, userId, id}:ITweet){
+const Profile = styled.div`
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+`
+
+const ProfileImgWrap = styled.div`
+    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: #eee;
+`
+
+const ProfileImg = styled.img`
+    width: 100%;
+`
+
+const PostDate = styled.p`
+    margin-top: 5px;
+    font-size: 12px;
+    color: #666;
+`
+
+export default function Tweet({username, photo, tweet, userId, id, createdAt, avatar}:ITweet){
     const user = auth.currentUser
 
     const onDelete = async () => {
@@ -87,11 +112,20 @@ export default function Tweet({username, photo, tweet, userId, id}:ITweet){
         <Wrapper>
             {photo ? <Column><Photo src={photo}/></Column> : null}
             <Column>
-                <Username>{username}</Username>
+                <Profile>
+                    <ProfileImgWrap>
+                        <ProfileImg src={avatar} />
+                    </ProfileImgWrap>
+                    <div>
+                        <Username>{username}</Username>
+                        <PostDate>{createdAt}</PostDate>
+                    </div>
+                </Profile>
+
                 <Payload>{tweet}</Payload>
                 {user?.uid === userId ? <BtnWrapper>
                 <DeleteButton onClick={onDelete}>Delete</DeleteButton>
-                <EditButton><Link to="edit-tweet" state={{username, photo, tweet, userId, id}}>Edit</Link></EditButton>
+                <EditButton><Link to="/edit-tweet" state={{username, photo, tweet, userId, id}}>Edit</Link></EditButton>
                 </BtnWrapper> : null}
             </Column>
         </Wrapper>

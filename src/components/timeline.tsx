@@ -47,9 +47,10 @@ export default function Timeline(){
             // 쿼리에 리스너를 붙여준것 : 실시간 변경 감지
             unsubscribe = onSnapshot(tweetsQuery, (snapshot) => {
                 const tweets = snapshot.docs.map((doc) => {
-                    const {tweet, createdAt, userId, username, photo} = doc.data()
+                    const {tweet, createdAt, userId, username, photo, avatar} = doc.data()
                     return {
                         tweet,
+                        avatar,
                         createdAt,
                         userId,
                         username,

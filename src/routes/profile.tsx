@@ -137,6 +137,7 @@ export default function Profile(){
             for(let i = 0; i < tweetId.length; i++){
                 await updateDoc(doc(db, "tweets", tweetId[i]),{
                     username: name,
+                    avatar,
                 })
             }
         } catch(e){
@@ -173,9 +174,10 @@ export default function Profile(){
 
             unsubscribe = onSnapshot(tweetsQuery, (snapshot) => {
                 const tweets = snapshot.docs.map((doc) => {
-                    const {tweet, createdAt, userId, username, photo} = doc.data()
+                    const {tweet, createdAt, userId, username, photo, avatar} = doc.data()
                     return {
                         tweet,
+                        avatar,
                         createdAt,
                         userId,
                         username,
