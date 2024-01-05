@@ -83,7 +83,7 @@ export default function EditTweet(){
     const navigate = useNavigate()
 
     const tweetValue = location.state.tweet
-    const photo = location.state.photo
+    const photo = location.state.photo ?? null
     const id = location.state.id
 
     const [isLoading, setIsLoading] = useState(false)
@@ -119,7 +119,6 @@ export default function EditTweet(){
             setIsLoading(true)
             await updateDoc(doc(db, "tweets", id), {
                 tweet,
-                createdAt: Date.now(),
             })
             if(file){
                 const locationRef = ref(storage, `tweets/${user.uid}/${id}`)
