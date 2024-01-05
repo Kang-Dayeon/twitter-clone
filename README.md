@@ -1,30 +1,70 @@
-# React + TypeScript + Vite
+# Twitter clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Server
+https://twitter-clone-5f4ac.web.app/
 
-Currently, two official plugins are available:
+## Stacks
+* Environment
+  - Visual Studio Code
+  - github
+  
+* config
+  - NPM
+  
+* Development
+  - React
+  - Vite
+  - React Router
+  - Styled component
+  - Typescript
+  - Firebase
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Requirements
 
-## Expanding the ESLint configuration
+* Node.js 20.9.0
+* Npm 9.7.1
+* React 18.2.0
+* React-router-dom 18.2.0
+* vite 5.0.0"
+* Typescript 5.2.2
+* Firebase 10.1.0
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Installation
+<pre>
+<code>// ** start
+$ npm install
+$ npm run dev
+  
+// ** deploy
+$ npm run deploy</code>
+</pre>
 
-- Configure the top-level `parserOptions` property like this:
+## Architecture
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<pre>
+<code>
+│   App.tsx
+│   firebase.ts
+│   main.tsx
+│   vite-env.d.ts
+│
+├───components
+│       auth-component.tsx
+│       github-btn.tsx
+│       Header.tsx
+│       layout.tsx
+│       loading-screen.tsx
+│       post-tweet-form.tsx
+│       protected-route.tsx
+│       timeline.tsx
+│       tweet.tsx
+│
+└───routes
+        create-account.tsx
+        edit-tweet.tsx
+        find-password.tsx
+        home.tsx
+        login.tsx
+        profile.tsx
+    </code>
+    </pre>
