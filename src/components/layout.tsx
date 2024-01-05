@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `
 
 const Menu = styled.div`
-    position: absolute;
+    position: fixed;
     bottom: 0;
     height: 60px;
     margin-top: 20px;
@@ -21,6 +21,7 @@ const Menu = styled.div`
     justify-content: space-around;
     align-items: center;
     width: 100%;
+    max-width: 500px;
     border-top: 1px solid #BFBFBF;
     background: #fff;
 `
