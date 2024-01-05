@@ -33,7 +33,7 @@ const router = createBrowserRouter([
         element: <Profile />
       },
       {
-        path: "edit-tweet",
+        path: "/edit-tweet",
         element: <EditTweet />
       }
     ]
